@@ -1,11 +1,11 @@
 require 'mysql2'
 
 begin
-	# Initialize connection variables.
-	host = String('jjtestmysql.mysql.database.azure.com')
-	database = String('test')
-    username = String('sqladmin@jjtestmysql')
-	password = String(ENV["sqlpassword"])
+    # Initialize connection variables.
+    host = String('server.mysql.database.azure.com')
+    database = String('test')
+    username = String('user@server')
+    password = String(ENV["sqlpassword"])
     ssl_ca = String('/app/app/rubymysql/BaltimoreCyberTrustRoot.crt.pem')
 
 	# Initialize connection object.
