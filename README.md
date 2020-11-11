@@ -108,7 +108,9 @@ end
 There are a number of things here that need calling-out in order to understand what is happening:
 1. Azure Database for MySQL has a server name of the form *your-server.mysql.database.azure.com* where *your-server* is a name of the server as created in the Azure portal. This is a fully-qualified domain name (FQDN) and as such needs to be globally unique.
 2. In the Azure portal, there is no opportunity to define a database separately from the server - which is different to Azure SQL Database. Nor is there a means later in the portal to do this AFAIK. So, you need to create a database at a later time after the server has been provisioned. One way to do this is to open a mysql session to the server and then create a database. There is some guidance [here](https://docs.microsoft.com/en-gb/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal?WT.mc_id=Portal-Microsoft_Azure_Marketplace#connect-to-the-server-with-mysql-command-line-client) on how to do this in the Azure Cloud Shell.
+
 ![Create database in cloud shell](/images/mysql-cloud-shell.png)
+
 3. The database for the connection is the one created in the previous step.
 4. Connections to the database should be under SSL/TLS. This appears to require that the code have access to a certificate PEM file that is discussed [here](https://docs.microsoft.com/en-us/azure/mysql/howto-configure-ssl) The certifate needs to be in a container and in a known path. The line:
 ```
@@ -116,13 +118,15 @@ ssl_ca = String('/app/app/rubymysql/BaltimoreCyberTrustRoot.crt.pem')
 ```
 refers to the path *inside the container* that the PEM file can be found. This will then allow you to enable the *Enforce SSL connection* setting in for Azure Database for MySQL. This is shown highlighted below:
 ![Enforce SSL connection](/images/enforce-ssl.png)
+
 Now running the sample SQL Ruby code will result in the following:
 ![SQL code run](/images/code-run.png)
+
 5. Ideally, the database connection information should not be present in the code :-) So, this should be injected into the container at runtime.
 ```
 ENV sql-connection
 ```
-If you then host the container in Azure Web App for Containers, application settings get injected into the container as environment variables.
+If you then host the container in Azure Web App for Containers, application settings get injected into the container as environment variables. If the target host for the application is Azure web app for Containers, [here](https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-windows#configure-environment-variables) is some documentation on how environment variables and app service application settings work together. 
 
 ## Summary
 A Ruby on Rails application can be configured to work in a container to Azure Database for MySQL easily, but there are a number of steps to bear in mind:
@@ -130,4 +134,5 @@ A Ruby on Rails application can be configured to work in a container to Azure Da
 2. By default this is not included in the ruby base image
 3. Azure Database for MySQL does not create a database on provisioning. This needs to be done afterwards
 4. SSL/TLS configuration requires the container to contain a specific certificate to work.
+5. Environment variables can be used to pass secrets e.g. database connection information into the container.
 5. Don't forget to also set the firewall on the Azure Database for MySQL to allow the container location to be whitelisted.
