@@ -3,7 +3,7 @@ This repository describes how a Ruby to MySQL application may be migrated to Azu
 It builds upon the Azure DevOps starter for Ruby, whose source code can be found by creating a Ruby DevOps starter project and then pulling the source code.
 For a MySQL database, the Azure plaform service *Azure Database for MySQL" will be used.
 
-## TL;DR Summary
+## TL;DR
 A Ruby on Rails application can be configured to work in a container to Azure Database for MySQL easily, but there are a number of steps to bear in mind:
 1. The MySQL driver for Ruby is a different install to that of a MySQL Server
 2. By default this is not included in the ruby base image
@@ -154,3 +154,5 @@ If you then host the container in Azure Web App for Containers, application sett
 ## Deployment to Azure Web App for Containers
 ToDo
 
+##Summary
+Ruby database applications that use MySQL can be migrated to Azure easily with containers, Web App for Containers and Azure Database for MySQL.
