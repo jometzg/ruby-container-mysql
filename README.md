@@ -78,7 +78,7 @@ In the above Dockerfile, the *default-libmysqlclient-dev* library is included an
 Also notice, that for debugging purposes, the nano editor has been addded and also at the bottom of the Dockerfile, there is commented-out *CMD /bin/sh* - this will allow you to work inside the container interactively.
 
 ## Sample Ruby SQL code to validate the connection to MySQL
-The original sample did not have any MySQL code, so some has been borrowed from elsewhere, which will allow the configuration and connection to the Azure Database for MySQL to be validated. This uses the MySql2 library https://github.com/brianmario/mysql2
+The original sample did not have any MySQL code, so some has been borrowed from [here](https://docs.microsoft.com/en-us/azure/mysql/connect-ruby), which will allow the configuration and connection to the Azure Database for MySQL to be validated. This uses the MySql2 library https://github.com/brianmario/mysql2
 
 ```
 require 'mysql2'
