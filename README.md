@@ -118,3 +118,16 @@ refers to the path *inside the container* that the PEM file can be found. This w
 ![Enforce SSL connection](/images/enforce-ssl.png)
 Now running the sample SQL Ruby code will result in the following:
 ![SQL code run](/images/code-run.png)
+5. Ideally, the database connection information should not be present in the code :-) So, this should be injected into the container at runtime.
+```
+ENV sql-connection
+```
+If you then host the container in Azure Web App for Containers, application settings get injected into the container as environment variables.
+
+## Summary
+A Ruby on Rails application can be configured to work in a container to Azure Database for MySQL easily, but there are a number of steps to bear in mind:
+1. The MySQL driver for Ruby is a different install to that of a MySQL Server
+2. By default this is not included in the ruby base image
+3. Azure Database for MySQL does not create a database on provisioning. This needs to be done afterwards
+4. SSL/TLS configuration requires the container to contain a specific certificate to work.
+5. Don't forget to also set the firewall on the Azure Database for MySQL to allow the container location to be whitelisted.
