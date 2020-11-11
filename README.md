@@ -77,7 +77,7 @@ CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 In the above Dockerfile, the *default-libmysqlclient-dev* library is included and later the mysql driver installed via *gem install*.
 Also notice, that for debugging purposes, the nano editor has been addded and also at the bottom of the Dockerfile, there is commented-out *CMD /bin/sh* - this will allow you to work inside the container interactively.
 
-## Some test MySQL code to valiate the connection to MySQL
+## Sample Ruby SQL code to validate the connection to MySQL
 The original sample did not have any MySQL code, so some has been borrowed from elsewhere, which will allow the configuration and connection to the Azure Database for MySQL to be validated.
 
 ```
