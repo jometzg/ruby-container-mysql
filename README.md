@@ -1,6 +1,18 @@
 # Ruby on Rails applications on Azure
-This repository is an attempt to describe how a Ruby to MySQL application may be migrated to Azure using containers.
+This repository describes how a Ruby to MySQL application may be migrated to Azure using docker containers.
 It builds upon the Azure DevOps starter for Ruby, whose source code can be found by creating a Ruby DevOps starter project and then pulling the source code.
+For a MySQL database, the Azure plaform service *Azure Database for MySQL" will be used.
+
+## TL;DR Summary
+A Ruby on Rails application can be configured to work in a container to Azure Database for MySQL easily, but there are a number of steps to bear in mind:
+1. The MySQL driver for Ruby is a different install to that of a MySQL Server
+2. By default this is not included in the ruby base image
+3. Azure Database for MySQL does not create a database on provisioning. This needs to be done afterwards
+4. SSL/TLS configuration requires the container to contain a specific certificate to work.
+5. Environment variables can be used to pass secrets e.g. database connection information into the container.
+5. Don't forget to also set the firewall on the Azure Database for MySQL to allow the container location to be whitelisted.
+
+## DevOps starter
 The DevOps Starter project can be found in the Azure portal:
 ![DevOps Starter page one](/images/devops-starter-one.png)
 ![DevOps Starter page two](/images/devops-starter-two.png)
@@ -139,11 +151,6 @@ docker run -it --env sqlpassword=actualpassword rubysample
 ```
 If you then host the container in Azure Web App for Containers, application settings get injected into the container as environment variables. If the target host for the application is Azure web app for Containers, [here](https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-windows#configure-environment-variables) is some documentation on how environment variables and app service application settings work together. 
 
-## Summary
-A Ruby on Rails application can be configured to work in a container to Azure Database for MySQL easily, but there are a number of steps to bear in mind:
-1. The MySQL driver for Ruby is a different install to that of a MySQL Server
-2. By default this is not included in the ruby base image
-3. Azure Database for MySQL does not create a database on provisioning. This needs to be done afterwards
-4. SSL/TLS configuration requires the container to contain a specific certificate to work.
-5. Environment variables can be used to pass secrets e.g. database connection information into the container.
-5. Don't forget to also set the firewall on the Azure Database for MySQL to allow the container location to be whitelisted.
+## Deployment to Azure Web App for Containers
+ToDo
+
