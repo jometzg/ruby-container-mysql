@@ -126,6 +126,14 @@ Now running the sample SQL Ruby code will result in the following:
 ```
 ENV sqlpassword=test
 ```
+And then the Ruby database connection code needs to reference that environment variable:
+```
+password = String(ENV["sqlpassword"])
+```
+For running the container locally:
+```
+docker run -it --env sqlpassword=actualpassword rubysample
+```
 If you then host the container in Azure Web App for Containers, application settings get injected into the container as environment variables. If the target host for the application is Azure web app for Containers, [here](https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-windows#configure-environment-variables) is some documentation on how environment variables and app service application settings work together. 
 
 ## Summary
