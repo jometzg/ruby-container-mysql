@@ -10,7 +10,10 @@ A Ruby on Rails application can be configured to work in a container to Azure Da
 3. Azure Database for MySQL does not create a database on provisioning. This needs to be done afterwards
 4. SSL/TLS configuration requires the container to contain a specific certificate to work.
 5. Environment variables can be used to pass secrets e.g. database connection information into the container.
-5. Don't forget to also set the firewall on the Azure Database for MySQL to allow the container location to be whitelisted.
+5. The firewall on the Azure Database for MySQL need to be updated to allow the container location to be whitelisted.
+6. Docker image upload to Azure Container Registry (ACR)
+7. Web App for Containers to use the above image
+8. Use application settings in the web app to set secrets, which will then be container environment variables
 
 ## DevOps starter
 The DevOps Starter project can be found in the Azure portal:
