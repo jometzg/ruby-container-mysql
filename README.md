@@ -31,3 +31,77 @@ EXPOSE 3000
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 ```
 This copies application code in a directory "app" and then runs rails server on port 3000.
+
+## Dockerfile with a MySQL driver
+```
+FROM ruby:2.3
+RUN apt-get update && apt-get install -y \ 
+  build-essential \ 
+  nodejs \
+  build-essential \
+  default-libmysqlclient-dev \
+  nano
+
+RUN gem install mysql2
+
+RUN mkdir -p /app 
+WORKDIR /app
+
+COPY Gemfile Gemfile.lock ./ 
+RUN gem install bundler && bundle install --jobs 20 --retry 5
+
+COPY . ./
+
+EXPOSE 3000
+#CMD /bin/sh
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+```
+In the above Dockerfile, the *default-libmysqlclient-dev* library is included and later the mysql driver installed via *gem install*.
+Also notice, that for debugging purposes, the nano editor has been addded and also at the bottom of the Dockerfile, there is commented-out *CMD /bin/sh* - this will allow you to work inside the container interactively.
+
+## Some test MySQL code to valiate the connection to MySQL
+The original sample did not have any MySQL code, so some has been borrowed from elsewhere, which will allow the configuration and connection to the Azure Database for MySQL to be validated.
+
+```
+require 'mysql2'
+
+begin
+	# Initialize connection variables.
+	host = String('your-server.mysql.database.azure.com')
+	database = String('yourdatabase')
+  username = String('youruser@yoursever')
+	password = String('your-password')
+  ssl_ca = String('/app/app/rubymysql/BaltimoreCyberTrustRoot.crt.pem')
+
+	# Initialize connection object.
+    client = Mysql2::Client.new(:host => host, 
+                            :username => username, 
+                            :database => database, 
+                            :password => password, 
+                            :sslca => ssl_ca)
+    puts 'Successfully created connection to database.'
+
+    # Drop previous table of same name if one exists
+    client.query('DROP TABLE IF EXISTS inventory;')
+    puts 'Finished dropping table (if existed).'
+
+    # Drop previous table of same name if one exists.
+    client.query('CREATE TABLE inventory (id serial PRIMARY KEY, name VARCHAR(50), quantity INTEGER);')
+    puts 'Finished creating table.'
+
+    # Insert some data into table.
+    client.query("INSERT INTO inventory VALUES(1, 'banana', 150)")
+    client.query("INSERT INTO inventory VALUES(2, 'orange', 154)")
+    client.query("INSERT INTO inventory VALUES(3, 'apple', 100)")
+    puts 'Inserted 3 rows of data.'
+
+# Error handling
+rescue Exception => e
+    puts e.message
+
+# Cleanup
+ensure
+    client.close if client
+    puts 'Done.'
+end
+```
