@@ -35,6 +35,9 @@ This copies application code in a directory "app" and then runs rails server on 
 ## Dockerfile with a MySQL driver
 ```
 FROM ruby:2.3
+
+ENV sqlpassword=test
+
 RUN apt-get update && apt-get install -y \ 
   build-essential \ 
   nodejs \
@@ -70,7 +73,7 @@ begin
    host = String('your-server.mysql.database.azure.com')
    database = String('yourdatabase')
    username = String('youruser@yoursever')
-   password = String('your-password')
+   password = String(ENV["sqlpassword"])
    ssl_ca = String('/app/app/rubymysql/BaltimoreCyberTrustRoot.crt.pem')
 
 	# Initialize connection object.
