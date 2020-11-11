@@ -152,7 +152,10 @@ docker run -it --env sqlpassword=actualpassword rubysample
 If you then host the container in Azure Web App for Containers, application settings get injected into the container as environment variables. If the target host for the application is Azure web app for Containers, [here](https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-windows#configure-environment-variables) is some documentation on how environment variables and app service application settings work together. 
 
 ## Deployment to Azure Web App for Containers
-ToDo
+As with most containers, deployment is a multi-step process:
+1. Build the container image
+2. Push the image to Azure Container Respository (ACR)
+3. Using Web App for Containers, pull the image to the web app from the ACR instance.
 
 ##Summary
 Ruby database applications that use MySQL can be migrated to Azure easily with containers, Web App for Containers and Azure Database for MySQL.
