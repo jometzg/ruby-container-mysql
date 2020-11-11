@@ -66,12 +66,12 @@ The original sample did not have any MySQL code, so some has been borrowed from 
 require 'mysql2'
 
 begin
-	# Initialize connection variables.
-	host = String('your-server.mysql.database.azure.com')
-	database = String('yourdatabase')
-  username = String('youruser@yoursever')
-	password = String('your-password')
-  ssl_ca = String('/app/app/rubymysql/BaltimoreCyberTrustRoot.crt.pem')
+   # Initialize connection variables.
+   host = String('your-server.mysql.database.azure.com')
+   database = String('yourdatabase')
+   username = String('youruser@yoursever')
+   password = String('your-password')
+   ssl_ca = String('/app/app/rubymysql/BaltimoreCyberTrustRoot.crt.pem')
 
 	# Initialize connection object.
     client = Mysql2::Client.new(:host => host, 
@@ -105,3 +105,7 @@ ensure
     puts 'Done.'
 end
 ```
+There are a number of things here that need calling-out in order to understand what is happening:
+1. Azure Database for MySQL has a server name of the form *your-server.mysql.database.azure.com* where *your-server* is a name of the server as created in the Azure portal. This is a fully-qualified domain name (FQDN) and as such needs to be globally unique.
+2. In the Azure portal, there is no opportunity to define a database separately from the server - which is different to Azure SQL Database. Nor is there a means later in the portal to do this AFAIK. So, you need to create a database at a later time after the server has been provisioned. One way to do this is to open a mysql session to the server and then create a database. There is some guidence [here](https://docs.microsoft.com/en-gb/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal?WT.mc_id=Portal-Microsoft_Azure_Marketplace#connect-to-the-server-with-mysql-command-line-client) on how to do this in the Azure Cloud Shell.
+![Create database in cloud shell](/images/mysql-cloud-shell.png)
