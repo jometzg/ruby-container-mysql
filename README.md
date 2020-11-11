@@ -160,5 +160,11 @@ As with most containers, deployment is a multi-step process:
 2. Push the image to Azure Container Respository (ACR)
 3. Using Web App for Containers, pull the image to the web app from the ACR instance.
 
+```
+docker build -t rubysample:100
+docker tag rubysample:100 youracr.azurecr.io/rubysample:100
+docker push youracr.azurecr.io/rubysample:100
+```
+
 ## Summary
 Ruby database applications that use MySQL can be migrated to Azure easily with containers, Web App for Containers and Azure Database for MySQL.
