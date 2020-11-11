@@ -124,7 +124,7 @@ Now running the sample SQL Ruby code will result in the following:
 
 5. Ideally, the database connection information should not be present in the code :-) So, this should be injected into the container at runtime.
 ```
-ENV sql-connection
+ENV sqlpassword=test
 ```
 If you then host the container in Azure Web App for Containers, application settings get injected into the container as environment variables. If the target host for the application is Azure web app for Containers, [here](https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-windows#configure-environment-variables) is some documentation on how environment variables and app service application settings work together. 
 
